@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LittleSnack - Оформлення замовлення</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo"><a href="index.html"
+                    style="text-decoration: none; color: inherit;">Little<span>Snack</span></a></div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html#menu">Меню</a></li>
+                    <li><a href="index.html#cart">Кошик</a></li>
+                    <li><a href="index.html#orders">Мої замовлення</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="checkout">
+            <h1 class="section-title">Оформлення замовлення</h1>
+            <div class="card checkout-container">
+                <form action="#" method="get" class="checkout-form">
+                    <div class="order-summary-list">
+                        <h3>Ваше замовлення:</h3>
+                        <div class="order-item">
+                            <span class="item-name">Піца Кватро Формаджі</span>
+                            <span class="item-qty">1 шт.</span>
+                            <span class="item-price">245 грн</span>
+                        </div>
+                        <div class="order-item">
+                            <span class="item-name">Бургер "Дабл Біф"</span>
+                            <span class="item-qty">2 шт.</span>
+                            <span class="item-price">380 грн</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Ваше Ім'я:</label>
+                        <input type="text" id="name" name="name" placeholder="Введіть ваше ім'я" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Номер телефону:</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+380" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Адреса доставки:</label>
+                        <textarea id="address" name="address" rows="3" placeholder="Вулиця, будинок, квартира"
+                            required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="payment">Спосіб оплати:</label>
+                            <select id="payment" name="payment">
+                                <option value="cash">Готівка кур'єру</option>
+                                <option value="card_courier">Картою кур'єру</option>
+                                <option value="card_online">Оплата онлайн</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time">Час доставки:</label>
+                            <select id="time" name="time">
+                                <option value="asap">Якнайшвидше</option>
+                                <option value="30min">Через 30 хв</option>
+                                <option value="60min">Через 1 годину</option>
+                                <option value="specific">На вказаний час</option>
+                            </select>
+                            <input type="time" id="specific-time" name="specific-time" style="margin-top: 5px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comments">Коментар до замовлення:</label>
+                        <textarea id="comments" name="comments" rows="2"
+                            placeholder="Наприклад: не працює домофон"></textarea>
+                    </div>
+
+                    <div class="checkout-summary">
+                        <div class="total">
+                            <span><strong>Сума до сплати: </strong></span>
+                            <span class="total-amount">625 грн</span>
+                        </div>
+                        <button type="submit" class="btn-order">Підтвердити замовлення</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Контакти</h3>
+                    <p>Адреса: м. Львів, вул. Університетська, 1</p>
+                    <p>Телефон: +380 32 123 45 67</p>
+                    <p>Email: info@littlesnack.com</p>
+                </div>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 LittleSnack. Всі права захищені.
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
