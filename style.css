@@ -125,11 +125,70 @@ nav a:hover {
     background-color: #a00;
 }
 
+.btn-secondary {
+    background-color: #666;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-secondary:hover {
+    background-color: #444;
+}
+
 .cart-item {
     display: flex;
     justify-content: space-between;
-    padding: 5px 0;
+    align-items: center;
+    padding: 10px 0;
     border-bottom: 1px solid #eee;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f5f5f5;
+    padding: 5px;
+    border-radius: 6px;
+}
+
+.qty-btn {
+    background: #fff;
+    border: 1px solid #ddd;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.qty-btn:hover {
+    background: #d00;
+    color: #fff;
+    border-color: #d00;
+}
+
+.qty-input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 3px;
+    font-size: 0.9em;
+}
+
+/* Прибираємо стрілки в input number */
+.qty-input::-webkit-inner-spin-button,
+.qty-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .total-amount {
@@ -142,10 +201,53 @@ nav a:hover {
     border-left: 5px solid #00d;
 }
 
-.order-header,
 .order-details {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.details-left {
+    flex: 2;
+    /* Страви займають 2/3 ширини */
+}
+
+.details-right {
+    flex: 1;
+    /* Статус та дата займають 1/3 ширини */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    text-align: right;
+    min-width: 150px;
+}
+
+.order-date {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.order-items-list {
+    font-size: 1.1em;
+    color: #444;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.order-timer-box {
+    font-size: 0.85em;
+    color: #d00;
+    background: #fffafa;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #d003;
+}
+
+.order-timer-inline {
+    font-weight: bold;
+    font-family: monospace;
 }
 
 .order-status {
@@ -333,4 +435,116 @@ footer {
 
 .item-price {
     font-weight: bold;
+}
+
+/* Стилі для Лабораторної роботи №2 (Варіант 12) */
+.btn-added {
+    background-color: #28a745 !important;
+    cursor: default;
+}
+
+.delivery-timer-card {
+    text-align: center;
+    border: 2px solid #d00;
+}
+
+.timer-display {
+    font-size: 3em;
+    font-weight: bold;
+    color: #d00;
+    margin: 20px 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.cart-item-remove {
+    background: none;
+    border: none;
+    color: #d00;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Стилі для Модального Вікна (Лаба 2) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #d00;
+}
+
+.order-info-box {
+    background-color: #f9f9f9;
+    border: 1px dashed #d00;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+/* Стилі для вбудованого таймера в картці замовлення */
+.details-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.order-timer-box {
+    font-size: 0.9em;
+    color: #666;
+    background: #fdf2f2;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #ff000033;
+    display: inline-block;
+}
+
+.order-timer-inline {
+    font-weight: bold;
+    color: #d00;
+    font-family: monospace;
 }

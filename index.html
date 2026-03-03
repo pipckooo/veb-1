@@ -27,85 +27,26 @@
 
         <section id="menu">
             <h1 class="section-title">Наше Меню</h1>
-
-            <div class="dish-grid">
-
-                <article class="dish-card">
-                    <img src="KvadroForm_1200x800.webp" alt="Піца Кватро Формаджі">
-                    <div class="dish-info">
-                        <h3>Піца Кватро Формаджі</h3>
-                        <p class="description">Класична італійська піца з чотирма видами сиру: моцарела, пармезан,
-                            горгонзола та едам. Спробуйте справжній сирний вибух!</p>
-                        <span class="price">245 грн</span>
-                        <button class="btn-add">Додати</button>
-                    </div>
-                </article>
-
-                <article class="dish-card">
-                    <img src="Burder_double_beef.webp" alt="Бургер Дабл Біф">
-                    <div class="dish-info">
-                        <h3>Бургер "Дабл Біф"</h3>
-                        <p class="description">Дві соковиті яловичі котлети, бекон, сир чеддер та фірмовий соус.
-                            Ідеальний вибір для ситного обіду.</p>
-                        <span class="price">190 грн</span>
-                        <button class="btn-add">Додати</button>
-                    </div>
-                </article>
-
-                <article class="dish-card">
-                    <img src="salat-czezar-z-kurkoyu-1024x1024.jpg" alt="Салат Цезар з куркою">
-                    <div class="dish-info">
-                        <h3>Салат Цезар з куркою</h3>
-                        <p class="description">Свіжий ромен, обсмажене куряче філе, грінки, пармезан та соус Цезар.
-                            Легка та корисна страва.</p>
-                        <span class="price">165 грн</span>
-                        <button class="btn-add">Додати</button>
-                    </div>
-                </article>
-
-                <article class="dish-card">
-                    <img src="carbonara.jpg" alt="Паста Карбонара">
-                    <div class="dish-info">
-                        <h3>Паста Карбонара</h3>
-                        <p class="description">Спагетті з копченою грудинкою, яєчним жовтком та тертим пармезаном.
-                            Класика італійської кухні.</p>
-                        <span class="price">180 грн</span>
-                        <button class="btn-add">Додати</button>
-                    </div>
-                </article>
+            <div class="dish-grid" id="menu-container">
+                <!-- Динамічний контент за допомогою JS -->
             </div>
         </section>
 
         <section id="cart">
             <h2 class="section-title">Ваш Кошик</h2>
-            <div class="card">
-                <div class="cart-items">
-                    <div class="cart-item">
-                        <span class="item-name">Піца Кватро Формаджі</span>
-                        <div class="item-controls">
-                            <button class="qty-btn">-</button>
-                            <span class="qty">1</span>
-                            <button class="qty-btn">+</button>
-                        </div>
-                        <span class="item-price">245 грн</span>
-                    </div>
-                    <div class="cart-item">
-                        <span class="item-name">Бургер "Дабл Біф"</span>
-                        <div class="item-controls">
-                            <button class="qty-btn">-</button>
-                            <span class="qty">2</span>
-                            <button class="qty-btn">+</button>
-                        </div>
-                        <span class="item-price">380 грн</span>
-                    </div>
+            <button onclick="toggleCartVisibility()" class="btn-secondary"
+                style="margin-bottom: 15px;">Приховати/Показати Кошик</button>
+            <div class="card" id="cart-card">
+                <div class="cart-items" id="cart-container">
+                    <!-- Динамічний контент за допомогою JS -->
                 </div>
 
                 <div class="cart-summary">
                     <div class="total">
                         <span><strong>Разом до сплати: </strong></span>
-                        <span class="total-amount">625 грн</span>
+                        <span class="total-amount" id="cart-total">0 грн</span>
                     </div>
-                    <a href="checkout.html" class="btn-order"
+                    <a href="checkout.html" class="btn-order" id="checkout-btn"
                         style="text-decoration: none; display: inline-block;">Оформити замовлення</a>
                 </div>
             </div>
@@ -113,30 +54,11 @@
 
         <section id="orders">
             <h2 class="section-title">Історія замовлень</h2>
-            <div class="orders-list">
-                <div class="order-card card">
-                    <div class="order-header">
-                        <span class="order-id">Замовлення #2481</span>
-                        <span class="order-date">15.02.2026, 18:30</span>
-                    </div>
-                    <div class="order-details">
-                        <p>Паста Карбонара, Лимонад домашній</p>
-                        <div class="order-status completed">Виконано</div>
-                    </div>
-                </div>
-
-                <div class="order-card card">
-                    <div class="order-header">
-                        <span class="order-id">Замовлення #2395</span>
-                        <span class="order-date">10.02.2026, 20:45</span>
-                    </div>
-                    <div class="order-details">
-                        <p>Бургер "Дабл Біф", Картопля фрі</p>
-                        <div class="order-status rejected">Відмовлено</div>
-                    </div>
-                </div>
+            <div class="orders-list" id="orders-container">
+                <!-- Динамічний контент за допомогою JS (цикл while) -->
             </div>
         </section>
+
     </main>
 
     <footer>
@@ -154,6 +76,8 @@
             </div>
         </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

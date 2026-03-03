@@ -98,6 +98,24 @@
         </section>
     </main>
 
+    <!-- Модальне вікно підтвердження (Завдання 3 покращення) -->
+    <div id="order-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal">&times;</button>
+            <div class="modal-header">
+                <h2>Замовлення прийнято!</h2>
+            </div>
+            <div class="modal-body">
+                <p>Дякуємо! Ваша страва вже готується.</p>
+                <div class="order-info-box">
+                    <p><strong>Номер замовлення:</strong> <span id="modal-order-number">#0000</span></p>
+                    <p><strong>Час доставки:</strong> <span id="modal-delivery-time">30-45 хв</span></p>
+                </div>
+                <p>Бажаємо приємного апетиту!</p>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -113,6 +131,68 @@
             </div>
         </div>
     </footer>
+    <script>
+        // DOM: .querySelector знаходить форму за класом, .addEventListener чекає на подію DOM
+        document.querySelector('.checkout-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // 1. Збір даних та Валідація через if-else (Завдання 3, Крок 2)
+            // DOM: .value дозволяє отримати текст, який користувач ввів у вузол DOM
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            if (name === "" || phone === "" || address === "") {
+                alert("Будь ласка, заповніть всі обов'язкові поля!");
+                return;
+            }
+
+            // 2. Генерація випадкових даних для модального вікна
+            const orderID = Math.floor(1000 + Math.random() * 9000);
+            const deliveryTime = "40-55 хв"; // Приблизний час
+
+            // 2. Вставка даних у модалку
+            // DOM: .textContent змінює виключно текстове наповнення вузла DOM
+            document.getElementById('modal-order-number').textContent = '#' + orderID;
+            document.getElementById('modal-delivery-time').textContent = deliveryTime;
+
+            // 3. Відображення модального вікна
+            // DOM: .style.display змінює видимість вузла в дереві DOM
+            document.getElementById('order-modal').style.display = 'flex';
+
+            // 4. Логіка для кнопки закриття (Збереження в Історію)
+            // DOM: .onclick — це спеціальна властивість для швидкого призначення обробника події
+            document.getElementById('close-modal').onclick = function () {
+                // Отримуємо поточний кошик та групуємо товари за назвою
+                const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+                const itemCounts = {};
+                currentCart.forEach(item => {
+                    itemCounts[item.name] = (itemCounts[item.name] || 0) + 1;
+                });
+
+                // Форматуємо список: кожна страва з нового рядка з кількістю
+                const formattedItems = Object.entries(itemCounts)
+                    .map(([name, count]) => `${name} x${count}`)
+                    .join('<br>');
+
+                // Збереження в Історію
+                let history = JSON.parse(localStorage.getItem('orders_history')) || [];
+                history.unshift({
+                    id: orderID,
+                    date: new Date().toLocaleString('uk-UA'),
+                    timestamp: Date.now(),
+                    items: formattedItems || "Замовлення з сайту",
+                    status: "completed",
+                    statusText: "Обробляється"
+                });
+                localStorage.setItem('orders_history', JSON.stringify(history));
+
+                localStorage.setItem('orderPlaced', 'true');
+                localStorage.removeItem('cart');
+                window.location.href = 'index.html';
+            };
+        });
+    </script>
 </body>
 
 </html>
