@@ -184,7 +184,6 @@ nav a:hover {
     font-size: 0.9em;
 }
 
-/* Прибираємо стрілки в input number */
 .qty-input::-webkit-inner-spin-button,
 .qty-input::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -210,12 +209,10 @@ nav a:hover {
 
 .details-left {
     flex: 2;
-    /* Страви займають 2/3 ширини */
 }
 
 .details-right {
     flex: 1;
-    /* Статус та дата займають 1/3 ширини */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -339,7 +336,6 @@ footer {
     }
 }
 
-
 .checkout-form {
     display: flex;
     flex-direction: column;
@@ -400,7 +396,6 @@ footer {
     }
 }
 
-/* Стилі для списку товарів у замовленні */
 .order-summary-list {
     background-color: #f9f9f9;
     padding: 15px;
@@ -437,7 +432,6 @@ footer {
     font-weight: bold;
 }
 
-/* Стилі для Лабораторної роботи №2 (Варіант 12) */
 .btn-added {
     background-color: #28a745 !important;
     cursor: default;
@@ -464,7 +458,6 @@ footer {
     font-weight: bold;
 }
 
-/* Стилі для Модального Вікна (Лаба 2) */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -526,7 +519,6 @@ footer {
     border-radius: 8px;
 }
 
-/* Стилі для вбудованого таймера в картці замовлення */
 .details-left {
     display: flex;
     flex-direction: column;
