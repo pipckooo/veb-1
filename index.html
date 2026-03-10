@@ -35,6 +35,8 @@
             <h2 class="section-title">Ваш Кошик</h2>
             <button onclick="toggleCartVisibility()" class="btn-secondary"
                 style="margin-bottom: 15px;">Приховати/Показати Кошик</button>
+            <button onclick="toggleTrashVisibility()" class="btn-secondary"
+                style="margin-bottom: 15px; background-color: #6c757d;">Смітник 🗑️</button>
             <div class="card" id="cart-card">
                 <div class="cart-items" id="cart-container">
                 </div>
@@ -46,6 +48,13 @@
                     </div>
                     <a href="checkout.html" class="btn-order" id="checkout-btn"
                         style="text-decoration: none; display: inline-block;">Оформити замовлення</a>
+                </div>
+            </div>
+
+            <div class="card" id="trash-card" style="display: none; border-color: #6c757d;">
+                <h3 style="margin-top: 0; color: #666;">Видалені страви (Смітник)</h3>
+                <div id="trash-container">
+                    <p style="color: #999;">Смітник порожній.</p>
                 </div>
             </div>
         </section>
