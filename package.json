@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node server.js",
-    "deploy": "cd littlesnack-react && CI= npm run build"
+    "vercel-build": "cd littlesnack-react && CI= npm run build"
   },
   "workspaces": [
     "littlesnack-react"
