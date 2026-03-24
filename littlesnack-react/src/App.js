@@ -8,11 +8,9 @@ import OrdersPage from './pages/OrdersPage';
 import CheckoutPage from './pages/CheckoutPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import { defaultOrders } from './data/menuData';
 
 function App() {
   const [orders, setOrders] = useState([]);
-  const [loadingOrders, setLoadingOrders] = useState(true);
 
   const fetchOrdersFromBackend = async () => {
     try {
@@ -21,8 +19,6 @@ function App() {
       setOrders(data);
     } catch (e) {
       console.error("Помилка завантаження замовлень з сервера:", e);
-    } finally {
-      setLoadingOrders(false);
     }
   };
 
