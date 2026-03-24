@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { db } from './firebase';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MenuPage from './pages/MenuPage';
@@ -14,8 +17,13 @@ function App() {
 
   const fetchOrdersFromBackend = async () => {
     try {
-      const response = await fetch('/api/orders');
-      const data = await response.json();
+      // Обходимо Vercel 504 bug: читаємо замовлення напряму через Firebase Client SDK
+      const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
+      const data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({ id: doc.id, ...doc.data() });
+      });
       setOrders(data);
     } catch (e) {
       console.error("Помилка завантаження замовлень з сервера:", e);
