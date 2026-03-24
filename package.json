@@ -1,13 +1,15 @@
 {
   "scripts": {
     "start": "node server.js",
-    "postinstall": "cd littlesnack-react && npm install",
     "build": "cd littlesnack-react && CI= npm run build"
   },
+  "workspaces": [
+    "littlesnack-react"
+  ],
   "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "firebase": "^12.10.0",
-    "firebase-admin": "^13.7.0"
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "firebase": "^10.14.1",
+    "firebase-admin": "^12.6.0"
   }
 }
