@@ -58,6 +58,12 @@ app.get('*', (req, res) => {
 
 // ЗАВДАННЯ 2 & 3: Отримання всіх замовлень (GET)
 app.get('/api/orders', async (req, res) => {
+    // ВАЖЛИВО: Вимикаємо кешування Vercel, щоб GET-запити завжди доходили до бази
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('Surrogate-Control', 'no-store');
+
     try {
         const snapshot = await db.collection('orders').get();
         const orders = [];
