@@ -131,7 +131,7 @@
         </div>
     </footer>
     <script>
-        document.querySelector('.checkout-form').addEventListener('submit', function (e) {
+        document.querySelector('.checkout-form').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const name = document.getElementById('name').value;
@@ -143,43 +143,48 @@
                 return;
             }
 
-            const orderID = Math.floor(1000 + Math.random() * 9000);
-            const deliveryTime = "40-55 хв";
-
-            document.getElementById('modal-order-number').textContent = '#' + orderID;
-            document.getElementById('modal-delivery-time').textContent = deliveryTime;
-
-            document.getElementById('order-modal').style.display = 'flex';
-
-            document.getElementById('close-modal').onclick = function () {
-                const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
-                const itemCounts = {};
-
-                currentCart.forEach(item => {
-                    const qty = item.quantity || 1;
-                    itemCounts[item.name] = (itemCounts[item.name] || 0) + qty;
-                });
-
-                const formattedItems = Object.entries(itemCounts)
-                    .map(([name, count]) => `${name} x${count}`)
-                    .join('<br>');
-
-                let history = JSON.parse(localStorage.getItem('orders_history')) || [];
-                history.unshift({
-                    id: orderID,
-                    date: new Date().toLocaleString('uk-UA'),
-                    timestamp: Date.now(),
-                    items: formattedItems || "Замовлення з сайту",
-                    status: "completed",
-                    statusText: "Обробляється"
-                });
-                localStorage.setItem('orders_history', JSON.stringify(history));
-
-                localStorage.setItem('orderPlaced', 'true');
-                localStorage.removeItem('cart');
-                window.location.href = 'index.html';
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Підготовка даних для замовлення
+            const orderData = {
+                name: name,
+                phone: phone,
+                address: address,
+                items: cart, // Масив об'єктів для серверної валідації (1-10 страв)
+                itemsString: cart.map(i => `${i.name} x${i.quantity}`).join(', '), // Рядок для відображення
+                date: new Date().toLocaleString('uk-UA'),
+                status: "completed",
+                statusText: "Замовлення оформлено"
             };
+
+            try {
+                // Відправка на сервер
+                const response = await fetch('/api/orders', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Показуємо модальне вікно при успіху
+                    document.getElementById('modal-order-number').textContent = '#' + result.id.slice(-4).toUpperCase();
+                    document.getElementById('order-modal').style.display = 'flex';
+                    localStorage.removeItem('cart'); // Чистимо кошик тільки якщо все добре
+                } else {
+                    // Відображаємо помилку від сервера (наприклад, валідація 1-10 страв)
+                    alert("Помилка від сервера: " + (result.error || "Невідома помилка"));
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                alert("Сервер недоступний. Переконайтеся, що backend запущено на порту 5000.");
+            }
         });
+
+        document.getElementById('close-modal').onclick = function () {
+            window.location.href = 'index.html';
+        };
     </script>
 </body>
 

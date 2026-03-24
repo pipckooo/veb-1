@@ -185,45 +185,48 @@ function renderCart() {
     syncMenuWithCart();
 }
 
-function renderOrders() {
+async function renderOrders() {
     const container = document.getElementById('orders-container');
     if (!container) return;
 
-    let html = "";
-    let counter = 0;
+    try {
+        const response = await fetch('/api/orders');
+        const orders = await response.json();
 
-    while (counter < ordersHistory.length) {
-        const order = ordersHistory[counter];
+        let html = "";
+        orders.forEach(order => {
+            let timerHtml = "";
+            if (order.timestamp && order.status !== "completed") {
+                timerHtml = `
+                    <div class="order-timer-box">
+                        Доставка через: <span class="order-timer-inline" data-start="${order.timestamp}">--:--</span>
+                    </div>
+                `;
+            }
 
-        let timerHtml = "";
-        if (order.timestamp) {
-            timerHtml = `
-                <div class="order-timer-box">
-                    Доставка через: <span class="order-timer-inline" data-start="${order.timestamp}">--:--</span>
+            html += `
+                <div class="order-card card">
+                    <div class="order-header">
+                        <span class="order-id">Замовлення #${order.id.slice(-4).toUpperCase()}</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="details-left">
+                            <p class="order-items-list">${order.itemsString || "Деталі недоступні"}</p>
+                        </div>
+                        <div class="details-right">
+                            <span class="order-date">${order.date || "Дата не вказана"}</span>
+                            ${timerHtml}
+                            <div class="order-status ${order.status || 'completed'}">${order.statusText || 'Прийнято'}</div>
+                        </div>
+                    </div>
                 </div>
             `;
-        }
-
-        html += `
-            <div class="order-card card">
-                <div class="order-header">
-                    <span class="order-id">Замовлення #${order.id}</span>
-                </div>
-                <div class="order-details">
-                    <div class="details-left">
-                        <p class="order-items-list">${order.items}</p>
-                    </div>
-                    <div class="details-right">
-                        <span class="order-date">${order.date}</span>
-                        ${timerHtml}
-                        <div class="order-status ${order.status}">${order.statusText}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-        counter++;
+        });
+        container.innerHTML = html || "<p>Замовлень поки немає.</p>";
+    } catch (e) {
+        console.error("Error loading orders:", e);
+        container.innerHTML = "<p>Не вдалося завантажити замовлення з сервера.</p>";
     }
-    container.innerHTML = html;
 }
 
 function toggleCartVisibility() {
