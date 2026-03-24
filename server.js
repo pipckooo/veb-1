@@ -31,6 +31,12 @@ if (serviceAccount) {
 }
 
 const db = admin.firestore();
+
+// КРИТИЧНО ДЛЯ VERCEL: Вимикаємо gRPC, який викликає таймаути 504
+if (process.env.VERCEL) {
+    db.settings({ preferRest: true });
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
