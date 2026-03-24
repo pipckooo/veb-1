@@ -97,3 +97,5 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`Open http://localhost:${PORT}/index.html to view your site`);
 });
+
+module.exports = app;
