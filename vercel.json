@@ -8,7 +8,9 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "littlesnack-react/build" }
+      "config": {
+        "distDir": "littlesnack-react/build"
+      }
     }
   ],
   "routes": [
@@ -16,7 +18,9 @@
       "src": "/api/(.*)",
       "dest": "server.js"
     },
-    { "handle": "filesystem" },
+    {
+      "handle": "filesystem"
+    },
     {
       "src": "/(.*)",
       "dest": "package.json"

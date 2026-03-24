@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node server.js",
-    "build": "cd littlesnack-react && CI= npm run build"
+    "deploy": "cd littlesnack-react && CI= npm run build"
   },
   "workspaces": [
     "littlesnack-react"
