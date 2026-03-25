@@ -48,14 +48,6 @@ app.use(express.json());
 const buildPath = path.join(__dirname, 'littlesnack-react/build');
 app.use(express.static(buildPath));
 
-// Доповнення для роботи React Router (завдання 5 лаби)
-app.get('*', (req, res) => {
-  // Перевіряємо, чи шлях не починається з /api (щоб не зламати бекенд)
-  if (!req.url.startsWith('/api')) {
-    res.sendFile(path.join(buildPath, 'index.html'));
-  }
-});
-
 // ЗАВДАННЯ 2 & 3: Отримання всіх замовлень (GET)
 app.get('/api/orders', async (req, res) => {
     // ВАЖЛИВО: Вимикаємо кешування Vercel, щоб GET-запити завжди доходили до бази
@@ -103,6 +95,11 @@ app.post('/api/orders', async (req, res) => {
         console.error("Error adding order:", error);
         res.status(500).json({ error: "Помилка при створенні замовлення" });
     }
+});
+
+// Доповнення для роботи React Router (завдання 5 лаби)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
 
 app.listen(PORT, () => {

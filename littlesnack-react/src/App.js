@@ -17,14 +17,15 @@ function App() {
 
   const fetchOrdersFromBackend = async () => {
     try {
-      // Обходимо Vercel 504 bug: читаємо замовлення напряму через Firebase Client SDK
-      const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
-      const querySnapshot = await getDocs(q);
-      const data = [];
-      querySnapshot.forEach((doc) => {
-        data.push({ id: doc.id, ...doc.data() });
-      });
-      setOrders(data);
+      const response = await fetch('/api/orders');
+      if (response.ok) {
+        let data = await response.json();
+        // Впорядкуємо за часом від новіших до старіших
+        data.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        setOrders(data);
+      } else {
+        console.error("Помилка від сервера при завантаженні замовлень.");
+      }
     } catch (e) {
       console.error("Помилка завантаження замовлень з сервера:", e);
     }
