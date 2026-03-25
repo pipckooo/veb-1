@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { db } from './firebase';
+import { auth, db } from './firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -14,10 +15,15 @@ import RegisterPage from './pages/RegisterPage';
 
 function App() {
   const [orders, setOrders] = useState([]);
+  const [user, setUser] = useState(null);
 
-  const fetchOrdersFromBackend = async () => {
+  const fetchOrdersFromBackend = async (uid) => {
+    if (!uid) {
+      setOrders([]);
+      return;
+    }
     try {
-      const response = await fetch('/api/orders');
+      const response = await fetch(`/api/orders?userId=${uid}`);
       if (response.ok) {
         let data = await response.json();
         // Впорядкуємо за часом від новіших до старіших
@@ -32,7 +38,15 @@ function App() {
   };
 
   useEffect(() => {
-    fetchOrdersFromBackend();
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        fetchOrdersFromBackend(currentUser.uid);
+      } else {
+        setOrders([]);
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   const [cart, setCart] = useState(() => {
@@ -121,7 +135,9 @@ function App() {
   const handleOrderSuccess = async () => {
     setCart([]);
     localStorage.removeItem('cart');
-    await fetchOrdersFromBackend();
+    if (user) {
+      await fetchOrdersFromBackend(user.uid);
+    }
   };
 
   return (
@@ -144,7 +160,7 @@ function App() {
               />
             }
           />
-          <Route path="/orders" element={<OrdersPage orders={orders} onRefresh={fetchOrdersFromBackend} />} />
+          <Route path="/orders" element={<OrdersPage orders={orders} onRefresh={() => user && fetchOrdersFromBackend(user.uid)} />} />
           <Route path="/checkout" element={<CheckoutPage cart={cart} onPlaceOrder={handleOrderSuccess} />} />
         </Routes>
         <Footer />

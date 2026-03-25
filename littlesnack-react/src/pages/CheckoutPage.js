@@ -50,6 +50,7 @@ const CheckoutPage = ({ cart, onPlaceOrder }) => {
         // ПІДГОТОВКА ДАНИХ ДЛЯ СЕРВЕРА
         const orderData = {
             ...formData,
+            userId: user.uid, // Додаємо ID користувача для фільтрації
             items: cart, // Масив об'єктів для серверної валідації (1-10 страв)
             itemsString: cart.map(i => `${i.name} x${i.quantity}`).join(', '), // Рядок для відображення
             date: new Date().toLocaleString('uk-UA'),

@@ -57,7 +57,14 @@ app.get('/api/orders', async (req, res) => {
     res.set('Surrogate-Control', 'no-store');
 
     try {
-        const snapshot = await db.collection('orders').get();
+        let snapshot;
+        const userId = req.query.userId;
+        if (userId) {
+            snapshot = await db.collection('orders').where('userId', '==', userId).get();
+        } else {
+            snapshot = await db.collection('orders').get();
+        }
+        
         const orders = [];
         snapshot.forEach(doc => {
             orders.push({ id: doc.id, ...doc.data() });
